@@ -51,4 +51,10 @@ you will fill the corresponding cell with your symbol. You will win if you match
 Player 1's turn
 Input move (1-9):
 
+### TODO 4:
 
+### TODO 5:
+
+### TODO 6:
+
+### TODO 7:
