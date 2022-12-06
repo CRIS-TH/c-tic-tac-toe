@@ -17,7 +17,7 @@ while i < 10
 
 ## Implement Print Board Function
 
-## TODO 1: Define Printboard
+### TODO 1: Define Printboard
 void print_board() {
 	for (each cell in board) {
 		print(cell and cell content)
@@ -32,7 +32,7 @@ void print_board() {
 | X |	| X |
 +---+---+---+
 
-## TODO 2: Print Instructions
+### TODO 2: Print Instructions
 
 +---+---+---+
 | 7 | 8 | 9 |
@@ -47,7 +47,7 @@ you will fill the corresponding cell with your symbol. You will win if you match
 3 of your symbols horizontally, vertically, or diagonally.
 
 
-## TODO 3: Prompt player to input move
+### TODO 3: Prompt player to input move
 Player 1's turn
 Input move (1-9):
 
