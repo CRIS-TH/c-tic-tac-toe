@@ -18,7 +18,7 @@ while i < 10
 ## Implement Print Board Function
 
 ### TODO 1: Define Printboard
-void print_board() {
+void print_board(char board[]) {
 	for (each cell in board) {
 		print(cell and cell content)
 	}
@@ -52,6 +52,7 @@ Player 1's turn
 Input move (1-9):
 
 ### TODO 4:
+
 
 ### TODO 5:
 
