@@ -34,6 +34,8 @@ void print_board(char board[]) {
 
 ### TODO 2: Print Instructions
 
+char board[9] = {'1','2','3','4','5','6','7','8','9'}
+
 +---+---+---+
 | 7 | 8 | 9 |
 +---+---+---+
