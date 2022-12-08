@@ -12,6 +12,8 @@ void print_board(char board[]);
 
 int main(void) {
 	
+	char player1 = 'X';
+	char player2 = 'O';
 	char board[BOARD_SIZE] = {'1','2','3','4','5','6','7','8','9'};
 
 	print_board(board);
