@@ -25,11 +25,11 @@ int main(void) {
 void print_board(char board[]){
 	int i;
 
-	for (i=0; i<BOARD_SIZE; i++)
-		printf("%c\n", board[i]);
-
+	printf("    +---+---+---+\n");
+	for (i=0; i<BOARD_SIZE; i+=3){
+		printf("    | %c | %c | %c |\n    +---+---+---+\n", board[i], board[i+1], board[i+2]);
+	}
 	usage();
-
 }
 
 void usage() {
@@ -44,5 +44,4 @@ void usage() {
 		"By inputing number, you will fill the corresponding cell with your symbol.\n"
 		"You will win if you match 3 of your symbols horizontally, vertically, or diagonally.\n"
 	);
-
 }
