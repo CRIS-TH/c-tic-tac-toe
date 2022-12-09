@@ -10,7 +10,7 @@
 
 void print_board(char board[]);
 void usage();
-void get_move(char player, char board[]);
+char get_move(char player);
 
 int main(void) {
 
@@ -25,7 +25,7 @@ int main(void) {
 
 	print_board(demoboard);
 	usage();
-	get_move(currentplayer, board);
+	printf("%c", get_move(currentplayer)) ;
 
 	return 0;
 }
@@ -40,32 +40,43 @@ void print_board(char board[]){
 }
 
 void usage() {
-	
+
 	char board[BOARD_SIZE] = {'1','2','3','4','5','6','7','8','9'};
-	
+
 	printf(
 		"\nThe Number corresponds to your number pad on the keyboard.\n"
 		"By inputing number, you will fill the corresponding cell with your symbol.\n"
+		"You will win if you match 3 of your symbols horizontally, vertically, or diagonally.\n"
 		"You will win if you match 3 of your symbols horizontally, vertically, or diagonally.\n\n"
 	);
 }
 
-void get_move(char player, char board[]) {
-	int input, nextplayer;
-	int valid_input[BOARD_SIZE] = {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
+// Get valid input from current player and return it
+char get_move(char player) {
+	char valid_input[BOARD_SIZE] = {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
 	
-	// TODO: Check if input is invalid
-	if (player == 'X') {
-		printf("Player 1's turn. Input move: ");
-		nextplayer = 'O';
-	} else {
-		printf("Player 2's turn. Input move: ");
-		nextplayer = 'X';
-	}
+	do {
+		if (player == 'X') {
+			printf("Player 1's turn. Input move: ");
+		} else {
+			printf("Player 2's turn. Input move: ");
+		}
 
-	scanf("%i", &input);
-	board[input - 1] = player;
-	print_board(board);
-	player = nextplayer;
-
+		char c = getchar();
+		
+		switch (c) {
+			case '1':
+			case '2':
+			case '3':
+			case '4':
+			case '5':
+			case '6':
+			case '7':
+			case '8':
+			case '9':
+				return c; // Only valid input
+			default:
+				putchar('\n');		
+		}
+	} while (1);
 }
