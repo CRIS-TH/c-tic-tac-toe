@@ -53,6 +53,17 @@ you will fill the corresponding cell with your symbol. You will win if you match
 Player 1's turn
 Input move (1-9):
 
+Use getchar() to get single char
+
+char prompt() {
+	do {
+		print("%s's turn\n Input move (1-9):", currentplayer);
+		move = getchar()
+	} while (move is not valid)
+
+	return move;
+}
+
 ### TODO 4:
 
 
