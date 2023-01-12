@@ -19,7 +19,7 @@ int main(void) {
 	char demoboard[BOARD_SIZE] = {'1','2','3','4','5','6','7','8','9'};
 	char board[BOARD_SIZE];
 	char currentplayer = player1;
-
+	
 	for(int i = 0; i < BOARD_SIZE; ++i)
 		board[i] = ' ';
 
