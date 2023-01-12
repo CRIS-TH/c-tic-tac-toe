@@ -10,24 +10,24 @@
 
 void print_board(char board[]);
 void usage();
-char get_move(char player);
+int get_move(char player);
 
 int main(void) {
 
 	char player1 = 'X';
 	char player2 = 'O';
-	char demoboard[BOARD_SIZE] = {'1','2','3','4','5','6','7','8','9'};
+	char demoboard[BOARD_SIZE] = {'7','8','9','4','5','6','1','2','3'};
 	char board[BOARD_SIZE];
-	char currentplayer = player1;
-	char storge;
-
-	for (int i=1; i >= BOARD_SIZE; ++i)
+	for(int i = 0; i < BOARD_SIZE; ++i)
 		board[i] = ' ';
-	
+	char currentplayer = player1;
+	int s;
+	printf("%d", s);
+
 	print_board(demoboard);
 	usage();
-	storge = get_move(currentplayer);
-	board[storge] = currentplayer;
+	s = get_move(currentplayer);
+	board[s] = 'X';
 	print_board(board);
 
 	return 0;
@@ -54,7 +54,7 @@ void usage() {
 }
 
 // Get valid input from current player and return it
-char get_move(char player) {
+int get_move(char player) {
 
 	if (player == 'X') {
 		printf("Player 1's turn. Input move: ");
