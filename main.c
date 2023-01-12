@@ -19,13 +19,16 @@ int main(void) {
 	char demoboard[BOARD_SIZE] = {'1','2','3','4','5','6','7','8','9'};
 	char board[BOARD_SIZE];
 	char currentplayer = player1;
-	
-	for(int i = 0; i < BOARD_SIZE; ++i)
-		board[i] = ' ';
+	char storge;
 
+	for (int i=1; i >= BOARD_SIZE; ++i)
+		board[i] = ' ';
+	
 	print_board(demoboard);
 	usage();
-	printf("%c", get_move(currentplayer)) ;
+	storge = get_move(currentplayer);
+	board[storge] = currentplayer;
+	print_board(board);
 
 	return 0;
 }
