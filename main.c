@@ -19,7 +19,7 @@ int main(void) {
 	char testboard[BOARD_SIZE];
 	char player1 = 'X';
 	char player2 = 'O';
-	char demoboard[BOARD_SIZE] = {'7','8','9','4','5','6','1','2','3'};
+	char demoboard[BOARD_SIZE] = {'1','2','3','4','5','6','7','8','9'};
 	char board[BOARD_SIZE];
 	for(int i = 0; i < BOARD_SIZE; ++i)
 		board[i], testboard[i] = 'X';
@@ -42,8 +42,8 @@ void print_board(char board[]){
 	int i;
 
 	printf("    +---+---+---+\n");
-	for (i=0; i<BOARD_SIZE; i+=3){
-		printf("    | %c | %c | %c |\n    +---+---+---+\n", board[i], board[i+1], board[i+2]);
+	for (i=8; i>=0; i-=3){
+		printf("    | %c | %c | %c |\n    +---+---+---+\n", board[i-2], board[i-1], board[i]);
 	}
 }
 
