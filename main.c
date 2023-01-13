@@ -10,7 +10,8 @@
 
 void print_board(char board[]);
 void usage();
-int get_move(char player);
+char get_move(char player);
+void update_board(char board[], char s, char player);
 
 int main(void) {
 
@@ -21,13 +22,12 @@ int main(void) {
 	for(int i = 0; i < BOARD_SIZE; ++i)
 		board[i] = ' ';
 	char currentplayer = player1;
-	int s;
-	printf("%d", s);
+	char s;
 
 	print_board(demoboard);
 	usage();
 	s = get_move(currentplayer);
-	board[s] = 'X';
+	update_board(board, s, currentplayer);
 	print_board(board);
 
 	return 0;
@@ -44,8 +44,6 @@ void print_board(char board[]){
 
 void usage() {
 
-	char board[BOARD_SIZE] = {'1','2','3','4','5','6','7','8','9'};
-
 	printf(
 		"\nThe Number corresponds to your number pad on the keyboard.\n"
 		"By inputing number, you will fill the corresponding cell with your symbol.\n"
@@ -53,8 +51,8 @@ void usage() {
 	);
 }
 
-// Get valid input from current player and return it
-int get_move(char player) {
+// Get valid char input from current player and return the int value
+char get_move(char player) {
 
 	if (player == 'X') {
 		printf("Player 1's turn. Input move: ");
@@ -86,4 +84,11 @@ int get_move(char player) {
 				break;
 		}
 	} while (1);
+}
+
+void update_board(char board[], char s, char player){
+	int i;
+	i = s;
+	i -= 49;
+	board[i] = player;
 }
