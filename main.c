@@ -11,7 +11,7 @@
 void print_board(char board[]);
 void usage();
 void update_board(char board[], char s, char player);
-char get_move(char player);
+char get_move(char player, char board[]);
 char win_check(char board[], char currentplayer);
 
 int main(void) {
@@ -25,12 +25,24 @@ int main(void) {
 		board[i] = ' ';
 	char currentplayer = player1;
 	char s;
-	
-	print_board(demoboard);
-	usage();
-	s = get_move(currentplayer);
-	update_board(board, s, currentplayer);
+
 	print_board(board);
+	usage();
+
+	do {
+		s = get_move(currentplayer, board);
+		update_board(board, s, currentplayer);
+		print_board(board);
+
+		if (win_check(board, currentplayer) != 0)
+			break;
+
+		if (currentplayer == 'X')
+			currentplayer = 'O';
+		else
+			currentplayer = 'X';
+	}
+	 while (1);
 
 	return 0;
 }
@@ -54,7 +66,7 @@ void usage() {
 }
 
 // Get valid char input from current player and return the int value
-char get_move(char player) {
+char get_move(char player, char board[]) {
 
 	if (player == 'X') {
 		printf("Player 1's turn. Input move: ");
@@ -76,7 +88,13 @@ char get_move(char player) {
 			case '7':
 			case '8':
 			case '9':
-				return c; // Only valid input
+				// TODO: Check slot occupancy
+				if (board[c]!='X'||board[c]!='O')	
+					return c; // Only valid input
+				else {
+					printf("Space occupied. Try again: ");
+					break;
+				}
 			case '\n':
 			case ' ':
 			case '\t':
@@ -100,26 +118,26 @@ char win_check(char board[], char player) {
 	// Horizontal wins
 	if (board[0]==player && board[1]==player && board[2]==player)
 		//TODO: Call the game over function if the game is over
-		printf("%c Win", player);
+		printf("%c Win\n", player);
 	else if (board[3]==player && board[4]==player && board[5]==player)
-		printf("%c Win", player);
+		printf("%c Win\n", player);
 	else if (board[6]==player && board[7]==player && board[8]==player)
 		printf("%c Win", player);
 	// Vertical wins
 	else if (board[0]==player && board[3]==player && board[6]==player)
-		printf("%c Win", player);
+		printf("%c Win\n", player);
 	else if (board[1]==player && board[4]==player && board[7]==player)
-		printf("%c Win", player);
+		printf("%c Win\n", player);
 	else if (board[2]==player && board[5]==player && board[8]==player)
-		printf("%c Win", player);
+		printf("%c Win\n", player);
 	// Crossed wins
 	else if (board[0]==player && board[4]==player && board[8]==player)
-		printf("%c Win", player);
+		printf("%c Win\n", player);
 	else if (board[2]==player && board[4]==player && board[6]==player)
-		printf("%c Win", player);
+		printf("%c Win\n", player);
 	// Tie
 	else if (board[0]!=' '&&board[1]!=' '&&board[2]!=' '&&board[3]!=' '&&board[4]!=' '&&board[5]!=' '&&board[6]!=' '&&board[7]!=' '&&board[8]!=' ')
-		printf("Tie");
+		printf("Tie\n");
 	// Game not over yet
 	else
 		return 0;
