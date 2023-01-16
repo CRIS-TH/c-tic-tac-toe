@@ -12,28 +12,25 @@ void print_board(char board[]);
 void usage();
 void update_board(char board[], char s, char player);
 char get_move(char player);
-char win_check(char board[]);
+char win_check(char board[], char currentplayer);
 
 int main(void) {
 	
-	char testboard[BOARD_SIZE];
+	char testboard[BOARD_SIZE] = {'X','O','X',' ',' ','O','X','O','O'};
 	char player1 = 'X';
 	char player2 = 'O';
 	char demoboard[BOARD_SIZE] = {'1','2','3','4','5','6','7','8','9'};
 	char board[BOARD_SIZE];
 	for(int i = 0; i < BOARD_SIZE; ++i)
-		board[i], testboard[i] = 'X';
+		board[i] = ' ';
 	char currentplayer = player1;
 	char s;
-
-	print_board(testboard);
-	win_check(testboard);
-
-	/*print_board(demoboard);
+	
+	print_board(demoboard);
 	usage();
 	s = get_move(currentplayer);
 	update_board(board, s, currentplayer);
-	print_board(board);*/
+	print_board(board);
 
 	return 0;
 }
@@ -99,19 +96,31 @@ void update_board(char board[], char s, char player){
 }
 
 // Check if the game is over
-char win_check(char board[]) {
-	int amount = 0;
-	for(int i = 0; i < BOARD_SIZE; ++i) {
-		if(board[i] != ' '){
-			++amount;
-		}
-	}
-	
-	printf("%i", amount);
-
-	if (amount == 9) {
-		//TODO: Display tie message through the function
-		printf("\nTie\n");
-	} else if (board[0]!=' ' && board[1]!=' ' && board[2]!=' ')
-		printf("%c Win", board[0]);
+char win_check(char board[], char player) {
+	// Horizontal wins
+	if (board[0]==player && board[1]==player && board[2]==player)
+		//TODO: Call the game over function if the game is over
+		printf("%c Win", player);
+	else if (board[3]==player && board[4]==player && board[5]==player)
+		printf("%c Win", player);
+	else if (board[6]==player && board[7]==player && board[8]==player)
+		printf("%c Win", player);
+	// Vertical wins
+	else if (board[0]==player && board[3]==player && board[6]==player)
+		printf("%c Win", player);
+	else if (board[1]==player && board[4]==player && board[7]==player)
+		printf("%c Win", player);
+	else if (board[2]==player && board[5]==player && board[8]==player)
+		printf("%c Win", player);
+	// Crossed wins
+	else if (board[0]==player && board[4]==player && board[8]==player)
+		printf("%c Win", player);
+	else if (board[2]==player && board[4]==player && board[6]==player)
+		printf("%c Win", player);
+	// Tie
+	else if (board[0]!=' '&&board[1]!=' '&&board[2]!=' '&&board[3]!=' '&&board[4]!=' '&&board[5]!=' '&&board[6]!=' '&&board[7]!=' '&&board[8]!=' ')
+		printf("Tie");
+	// Game not over yet
+	else
+		return 0;
 }
