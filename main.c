@@ -7,6 +7,13 @@
 
 #include <stdio.h>
 #define BOARD_SIZE 9
+/*
+	TODO define symbolic constants for chars and use instead of literals throughout the program:
+
+	PLAYER1
+	PLAYER2
+	EMPTY
+*/
 
 void print_board(char board[]);
 void usage();
@@ -17,6 +24,10 @@ char win_check(char board[], char currentplayer);
 int main(void) {
 	
 	char testboard[BOARD_SIZE] = {'X','O','X',' ',' ','O','X','O','O'};
+	/* TODO use symbolic constants instead of literals
+	char player1 = PLAYER1;
+	...
+	*/
 	char player1 = 'X';
 	char player2 = 'O';
 	char demoboard[BOARD_SIZE] = {'1','2','3','4','5','6','7','8','9'};
@@ -34,6 +45,12 @@ int main(void) {
 		update_board(board, s, currentplayer);
 		print_board(board);
 
+		/* TODO
+		if win_check is >= 0
+			print_winner(char returned by win_check)
+		else
+			keep playing
+		*/
 		if (win_check(board, currentplayer) != 0)
 			break;
 
@@ -113,12 +130,26 @@ void update_board(char board[], char s, char player){
 	board[i] = player;
 }
 
-// Check if the game is over
+/*
+	Accept a board array and return a char representing the winner state:
+		PLAYER1 : player 1 is the winner
+		PLAYER2 : player 2 is the winenr
+		 0 : players are tied
+		-1 : no current winner
+*/
+/* TODO we can remove the second parameter `player` */
 char win_check(char board[], char player) {
+	/*
+	TODO - the winning player can be determined from existing values
+
+	if (board[0] != EMPTY && board[0] == board[1] == board[2])
+		return board[0];
+	*/
+
 	// Horizontal wins
 	if (board[0]==player && board[1]==player && board[2]==player)
 		//TODO: Call the game over function if the game is over
-		printf("%c Win\n", player);
+		printf("%c Win\n", player);  /* TODO, don't do IO in a pure function - this is a side effect! */
 	else if (board[3]==player && board[4]==player && board[5]==player)
 		printf("%c Win\n", player);
 	else if (board[6]==player && board[7]==player && board[8]==player)
