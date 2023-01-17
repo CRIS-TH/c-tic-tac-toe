@@ -7,13 +7,9 @@
 
 #include <stdio.h>
 #define BOARD_SIZE 9
-/*
-	TODO define symbolic constants for chars and use instead of literals throughout the program:
-
-	PLAYER1
-	PLAYER2
-	EMPTY
-*/
+#define PLAYER1 'X'
+#define PLAYER2 'O'
+#define EMPTY ' '
 
 void print_board(char board[]);
 void usage();
@@ -22,21 +18,16 @@ char get_move(char player, char board[]);
 char win_check(char board[], char currentplayer);
 
 int main(void) {
-	
-	char testboard[BOARD_SIZE] = {'X','O','X',' ',' ','O','X','O','O'};
-	/* TODO use symbolic constants instead of literals
-	char player1 = PLAYER1;
-	...
-	*/
-	char player1 = 'X';
-	char player2 = 'O';
+
+//Functions
 	char demoboard[BOARD_SIZE] = {'1','2','3','4','5','6','7','8','9'};
 	char board[BOARD_SIZE];
 	for(int i = 0; i < BOARD_SIZE; ++i)
-		board[i] = ' ';
-	char currentplayer = player1;
+		board[i] = EMPTY;
+	char currentplayer = PLAYER1;
 	char s;
 
+//Show how to play
 	print_board(board);
 	usage();
 
@@ -54,16 +45,17 @@ int main(void) {
 		if (win_check(board, currentplayer) != 0)
 			break;
 
-		if (currentplayer == 'X')
-			currentplayer = 'O';
+		if (currentplayer == PLAYER1)
+			currentplayer = PLAYER2;
 		else
-			currentplayer = 'X';
+			currentplayer = PLAYER1;
 	}
 	 while (1);
 
 	return 0;
 }
 
+// Input the array board then it going to print the board
 void print_board(char board[]){
 	int i;
 
@@ -73,6 +65,7 @@ void print_board(char board[]){
 	}
 }
 
+// Print how to use for the user
 void usage() {
 
 	printf(
@@ -85,16 +78,15 @@ void usage() {
 // Get valid char input from current player and return the int value
 char get_move(char player, char board[]) {
 
-	if (player == 'X') {
+	if (player == PLAYER1) {
 		printf("Player 1's turn. Input move: ");
 	} else {
 		printf("Player 2's turn. Input move: ");
 	}
-	https://github.com/CRIS-TH/c-tic-tac-toe.git
 
 	do {
 		char c = getchar();
-
+		int i;
 		switch (c) {
 			case '1':
 			case '2':
@@ -105,8 +97,9 @@ char get_move(char player, char board[]) {
 			case '7':
 			case '8':
 			case '9':
-				// TODO: Check slot occupancy
-				if (board[c]!='X'||board[c]!='O')	
+				// -49 convert the '1' char to a 0 int for the array
+				i = c;
+				if (board[i-49] != PLAYER1 && board[i-49] != PLAYER2)	
 					return c; // Only valid input
 				else {
 					printf("Space occupied. Try again: ");
@@ -123,9 +116,11 @@ char get_move(char player, char board[]) {
 	} while (1);
 }
 
+//Storge the input data in the board array
 void update_board(char board[], char s, char player){
 	int i;
 	i = s;
+	// -49 convert the char into int for the array selecter
 	i -= 49;
 	board[i] = player;
 }
