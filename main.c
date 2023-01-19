@@ -128,26 +128,31 @@ void update_board(char data[], char s, char player){
 		 0 : players are tied
 		-1 : no current winner
 */
-/* TODO we can remove the second parameter `player` */
 char win_check(char data[]) {
 	// Horizontal wins
 	if (data[0] != EMPTY && data[0] == data[1] && data[1] == data[2])
-		return data[0];  /* TODO, don't do IO in a pure function - this is a side effect! */
-	else if (data[3] != EMPTY && data[3] == data[4] == data[5])
+		return data[0];
+
+	if (data[3] != EMPTY && data[3] == data[4] == data[5])
 		return data[3];
-	else if (data[6] != EMPTY && data[6] == data[7] == data[8])
+
+	if (data[6] != EMPTY && data[6] == data[7] == data[8])
 		return data[6];
+
 	// Vertical wins
-	else if (data[0] != EMPTY && data[0] == data[3] == data[6])
+	if (data[0] != EMPTY && data[0] == data[3] == data[6])
 		return data[0];
-	else if (data[1] !=EMPTY && data[1] == data[4] == data[8])
+
+	if (data[1] !=EMPTY && data[1] == data[4] == data[8])
 		return data[0];
-	else if (data[2] != EMPTY && data[2] == data[4] == data[6])
+
+	if (data[2] != EMPTY && data[2] == data[4] == data[6])
 		return data[2];
+
 	// Tie
-	else if (data[0]!=EMPTY&&data[1]!=EMPTY&&data[2]!=EMPTY&&data[3]!=EMPTY&&data[4]!=EMPTY&&data[5]!=EMPTY&&data[6]!=EMPTY&&data[7]!=EMPTY&&data[8]!=EMPTY)
+	if (data[0]!=EMPTY&&data[1]!=EMPTY&&data[2]!=EMPTY&&data[3]!=EMPTY&&data[4]!=EMPTY&&data[5]!=EMPTY&&data[6]!=EMPTY&&data[7]!=EMPTY&&data[8]!=EMPTY)
 		return TIE;
+
 	// Game not over yet
-	else
-		return NOWINNER;
+	return NOWINNER;
 }
