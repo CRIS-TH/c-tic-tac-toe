@@ -136,20 +136,27 @@ char win_check(char data[]) {
 	if (data[0] != EMPTY && data[0] == data[1] && data[1] == data[2])
 		return data[0];
 
-	if (data[3] != EMPTY && data[3] == data[4] == data[5])
+	if (data[3] != EMPTY && data[3] == data[4] && data[4] == data[5])
 		return data[3];
 
-	if (data[6] != EMPTY && data[6] == data[7] == data[8])
+	if (data[6] != EMPTY && data[6] == data[7] && data[7]== data[8])
 		return data[6];
 
 	// Vertical wins
-	if (data[0] != EMPTY && data[0] == data[3] == data[6])
+	if (data[0] != EMPTY && data[0] == data[3] && data[3] == data[6])
 		return data[0];
 
-	if (data[1] !=EMPTY && data[1] == data[4] == data[8])
+	if (data[1] !=EMPTY && data[1] == data[4] && data[4] == data[7])
 		return data[0];
 
-	if (data[2] != EMPTY && data[2] == data[4] == data[6])
+	if (data[2] != EMPTY && data[2] == data[5] && data[5] == data[8])
+		return data[2];
+
+	// Crossed wins
+	if (data[0] != EMPTY && data[0] == data[4] && data[4] == data[8])
+		return data[0];
+	
+	if (data[2] != EMPTY && data[2] == data[4] && data[4] == data[6])
 		return data[2];
 
 	// Tie
