@@ -1,1 +1,12 @@
+# object files
+*.o
+
+# default gcc binary
 a.out
+
+# tic tac toe binary
+ttt
+
+# ignore all hidden files except `.gitignore`
+.*
+!.gitignore
