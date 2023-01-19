@@ -14,11 +14,11 @@
 #define NOWINNER -1
 
 //Functions
-void print_board(char board[]);
+void print_board(char data[]);
 void usage();
-void update_board(char board[], char s, char player);
-char get_move(char player, char board[]);
-char win_check(char board[]);
+void update_board(char data[], char s, char player);
+char get_move(char player, char data[]);
+char win_check(char data[]);
 
 int main(void) {
 
@@ -31,15 +31,15 @@ int main(void) {
 	char s;
 
 //Show how to play
-	print_board(board);
+	print_board(demoboard);
 	usage();
 
 	do {
 		s = get_move(currentplayer, board);
 		update_board(board, s, currentplayer);
 		print_board(board);
-
-		printf("%i", win_check(board));
+		char winner = win_check(board);
+		printf("winner: `%c'\n", winner);
 
 		if (currentplayer == PLAYER1)
 			currentplayer = PLAYER2;
@@ -52,12 +52,12 @@ int main(void) {
 }
 
 // Input the array board then it going to print the board
-void print_board(char board[]){
+void print_board(char data[]){
 	int i;
 
 	printf("    +---+---+---+\n");
 	for (i=8; i>=0; i-=3){
-		printf("    | %c | %c | %c |\n    +---+---+---+\n", board[i-2], board[i-1], board[i]);
+		printf("    | %c | %c | %c |\n    +---+---+---+\n", data[i-2], data[i-1], data[i]);
 	}
 }
 
@@ -72,7 +72,7 @@ void usage() {
 }
 
 // Get valid char input from current player and return the int value
-char get_move(char player, char board[]) {
+char get_move(char player, char data[]) {
 
 	if (player == PLAYER1) {
 		printf("Player 1's turn. Input move: ");
@@ -95,7 +95,7 @@ char get_move(char player, char board[]) {
 			case '9':
 				// -49 convert the '1' char to a 0 int for the array
 				i = c;
-				if (board[i-49] != PLAYER1 && board[i-49] != PLAYER2)	
+				if (data[i-49] != PLAYER1 && data[i-49] != PLAYER2)	
 					return c; // Only valid input
 				else {
 					printf("Space occupied. Try again: ");
@@ -113,12 +113,12 @@ char get_move(char player, char board[]) {
 }
 
 //Storge the input data in the board array
-void update_board(char board[], char s, char player){
+void update_board(char data[], char s, char player){
 	int i;
 	i = s;
 	// -49 convert the char into int for the array selecter
 	i -= 49;
-	board[i] = player;
+	data[i] = player;
 }
 
 /*
@@ -129,23 +129,23 @@ void update_board(char board[], char s, char player){
 		-1 : no current winner
 */
 /* TODO we can remove the second parameter `player` */
-char win_check(char board[]) {
+char win_check(char data[]) {
 	// Horizontal wins
-	if (board[0] != EMPTY && board[0] == board[1] ==board[2])
-		return board[0];  /* TODO, don't do IO in a pure function - this is a side effect! */
-	else if (board[3] != EMPTY && board[3] == board[4] == board[5])
-		return board[3];
-	else if (board[6] != EMPTY && board[6] == board[7] == board[8])
-		return board[6];
+	if (data[0] != EMPTY && data[0] == data[1] && data[1] == data[2])
+		return data[0];  /* TODO, don't do IO in a pure function - this is a side effect! */
+	else if (data[3] != EMPTY && data[3] == data[4] == data[5])
+		return data[3];
+	else if (data[6] != EMPTY && data[6] == data[7] == data[8])
+		return data[6];
 	// Vertical wins
-	else if (board[0] != EMPTY && board[0] == board[3] == board[6])
-		return board[0];
-	else if (board[1] !=EMPTY && board[1] == board[4] == board[8])
-		return board[0];
-	else if (board[2] != EMPTY && board[2] == board[4] == board[6])
-		return board[2];
+	else if (data[0] != EMPTY && data[0] == data[3] == data[6])
+		return data[0];
+	else if (data[1] !=EMPTY && data[1] == data[4] == data[8])
+		return data[0];
+	else if (data[2] != EMPTY && data[2] == data[4] == data[6])
+		return data[2];
 	// Tie
-	else if (board[0]!=EMPTY&&board[1]!=EMPTY&&board[2]!=EMPTY&&board[3]!=EMPTY&&board[4]!=EMPTY&&board[5]!=EMPTY&&board[6]!=EMPTY&&board[7]!=EMPTY&&board[8]!=EMPTY)
+	else if (data[0]!=EMPTY&&data[1]!=EMPTY&&data[2]!=EMPTY&&data[3]!=EMPTY&&data[4]!=EMPTY&&data[5]!=EMPTY&&data[6]!=EMPTY&&data[7]!=EMPTY&&data[8]!=EMPTY)
 		return TIE;
 	// Game not over yet
 	else
