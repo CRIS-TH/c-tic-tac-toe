@@ -19,6 +19,7 @@ void usage();
 void update_board(char data[], char s, char player);
 char get_move(char player, char data[]);
 char win_check(char data[]);
+void displayer(int winner);
 
 int main(void) {
 
@@ -38,8 +39,10 @@ int main(void) {
 		s = get_move(currentplayer, board);
 		update_board(board, s, currentplayer);
 		print_board(board);
-		char winner = win_check(board);
-		printf("winner: `%c'\n", winner);
+		int winner = win_check(board);
+		
+		if (winner != -1)
+			displayer(winner);
 
 		if (currentplayer == PLAYER1)
 			currentplayer = PLAYER2;
@@ -155,4 +158,13 @@ char win_check(char data[]) {
 
 	// Game not over yet
 	return NOWINNER;
+
+}
+
+void displayer(int winner){
+	if (winner == 0)
+		printf("It's a tie");
+
+	printf("Winner is %c\n", winner);
+	
 }
