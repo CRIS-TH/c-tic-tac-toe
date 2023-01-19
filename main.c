@@ -19,7 +19,7 @@ void usage();
 void update_board(char data[], char s, char player);
 char get_move(char player, char data[]);
 char win_check(char data[]);
-void displayer(int winner);
+char displayer(int winner);
 
 int main(void) {
 
@@ -40,14 +40,23 @@ int main(void) {
 		update_board(board, s, currentplayer);
 		print_board(board);
 		int winner = win_check(board);
-		
-		if (winner != -1)
-			displayer(winner);
-
+	
 		if (currentplayer == PLAYER1)
 			currentplayer = PLAYER2;
 		else
 			currentplayer = PLAYER1;
+		
+		if (winner != -1){
+           	char c = displayer(winner);
+			if (c == 'N')
+				return 0;
+
+			if (c == 'Y')
+				for(int i = 0; i < BOARD_SIZE; ++i)
+        			board[i] = EMPTY;
+				continue;
+		}
+				
 	}
 	 while (1);
 
@@ -168,10 +177,21 @@ char win_check(char data[]) {
 
 }
 
-void displayer(int winner){
+char displayer(int winner){
 	if (winner == 0)
 		printf("It's a tie");
 
 	printf("Winner is %c\n", winner);
+	printf("Do you want to player again?\n Y or N\n");
+
+	char c = getchar();
 	
+	if (c = 'Y')
+		return c;
+	
+	if (c = 'N')
+		return c;
+	else;
+		printf("Please enter Y or N");
+		
 }
