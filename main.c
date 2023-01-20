@@ -26,39 +26,50 @@ int main(void) {
 //Boards and Player setup
 	char demoboard[BOARD_SIZE] = {'1','2','3','4','5','6','7','8','9'};
 	char board[BOARD_SIZE];
-	for(int i = 0; i < BOARD_SIZE; ++i)
-		board[i] = EMPTY;
-	char currentplayer = PLAYER1;
-	char s;
+	int do_play = 1;
 
-//Show how to play
-	print_board(demoboard);
-	usage();
+	while (do_play) {
+		for(int i = 0; i < BOARD_SIZE; ++i)
+			board[i] = EMPTY;
+		char currentplayer = PLAYER1;
+		char s;
 
-	do {
-		s = get_move(currentplayer, board);
-		update_board(board, s, currentplayer);
-		print_board(board);
-		int winner = win_check(board);
-	
-		if (currentplayer == PLAYER1)
-			currentplayer = PLAYER2;
-		else
-			currentplayer = PLAYER1;
+	//Show how to play
+		print_board(demoboard);
+		usage();
+
+		do {
+			s = get_move(currentplayer, board);
+			update_board(board, s, currentplayer);
+			print_board(board);
+			int winner = win_check(board);
 		
-		if (winner != -1){
-           	char c = displayer(winner);
-			if (c == 'N')
-				return 0;
+			if (currentplayer == PLAYER1)
+				currentplayer = PLAYER2;
+			else
+				currentplayer = PLAYER1;
+			
+			if (winner != -1){
+				/* TODO
+					make displayer() return void
+					define a play_again() function
+					that prompts the user and returns a boolean (int)
 
-			if (c == 'Y')
-				for(int i = 0; i < BOARD_SIZE; ++i)
-        			board[i] = EMPTY;
-				continue;
+					do_play = play_again();
+				*/
+				char c = displayer(winner);
+				if (c == 'N')
+					return 0;
+
+				if (c == 'Y')
+					for(int i = 0; i < BOARD_SIZE; ++i)
+						board[i] = EMPTY;
+					continue;
+			}
+					
 		}
-				
+		while (1);
 	}
-	 while (1);
 
 	return 0;
 }
@@ -184,6 +195,12 @@ char displayer(int winner){
 	printf("Winner is %c\n", winner);
 	printf("Do you want to player again?\n Y or N\n");
 
+	/* TODO
+		A function should do one thing only and do it well.
+		This function only displays the winner or tie.
+		Make another function play_again() that promts the user
+		to play again and returns a boolean
+	*/
 	char c = getchar();
 	
 	if (c = 'Y')
