@@ -77,11 +77,10 @@ void usage() {
 // Get valid char input from current player and return the int value
 char get_move(char player, char data[]) {
 
-	if (player == PLAYER1) {
+	if (player == PLAYER1)
 		printf("Player 1's turn. Input move: ");
-	} else {
+	else
 		printf("Player 2's turn. Input move: ");
-	}
 
 	do {
 		char c = getchar();
@@ -98,7 +97,7 @@ char get_move(char player, char data[]) {
 			case '9':
 				// -49 convert the '1' char to a 0 int for the array
 				i = c;
-				if (data[i-49] != PLAYER1 && data[i-49] != PLAYER2)	
+				if (data[i-49] == ' ')	
 					return c; // Only valid input
 				else {
 					printf("Space occupied. Try again: ");
@@ -115,7 +114,7 @@ char get_move(char player, char data[]) {
 	} while (1);
 }
 
-//Storge the input data in the board array
+//Store the input data in the board array
 void update_board(char data[], char s, char player){
 	int i;
 	i = s;
