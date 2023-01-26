@@ -19,7 +19,8 @@ void usage();
 void update_board(char data[], char s, char player);
 char get_move(char player, char data[]);
 char win_check(char data[]);
-char displayer(int winner);
+void displayer(int winner);
+int play_again(void);
 
 int main(void) {
 
@@ -50,21 +51,11 @@ int main(void) {
 				currentplayer = PLAYER1;
 			
 			if (winner != -1){
-				/* TODO
-					make displayer() return void
-					define a play_again() function
-					that prompts the user and returns a boolean (int)
-
-					do_play = play_again();
-				*/
-				char c = displayer(winner);
-				if (c == 'N')
-					return 0;
-
-				if (c == 'Y')
-					for(int i = 0; i < BOARD_SIZE; ++i)
-						board[i] = EMPTY;
-					continue;
+				
+				displayer(winner);
+				do_play = play_again();
+				break;
+				//Break inner loop
 			}
 					
 		}
@@ -144,13 +135,6 @@ void update_board(char data[], char s, char player){
 	data[i] = player;
 }
 
-/*
-	Accept a board array and return a char representing the winner state:
-		PLAYER1 : player 1 is the winner
-		PLAYER2 : player 2 is the winenr
-		 0 : players are tied
-		-1 : no current winner
-*/
 char win_check(char data[]) {
 	// Horizontal wins
 	if (data[0] != EMPTY && data[0] == data[1] && data[1] == data[2])
@@ -188,27 +172,32 @@ char win_check(char data[]) {
 
 }
 
-char displayer(int winner){
+void displayer(int winner){
 	if (winner == 0)
-		printf("It's a tie");
+		printf("It's a tie\n");
+	else
+		printf("Winner is %c\n", winner);
+}
 
-	printf("Winner is %c\n", winner);
-	printf("Do you want to player again?\n Y or N\n");
-
-	/* TODO
-		A function should do one thing only and do it well.
-		This function only displays the winner or tie.
-		Make another function play_again() that promts the user
-		to play again and returns a boolean
-	*/
-	char c = getchar();
+int play_again(void){
 	
-	if (c = 'Y')
-		return c;
+	char c;
+	printf("DO YOU WANT TO PLAY AGAIN?\n Y / N\n");
 	
-	if (c = 'N')
-		return c;
-	else;
-		printf("Please enter Y or N");
+	do {
+		c = getchar();
+		if (c == 'N' || c == 'n')
+			return 0;
 		
+		if (c == 'Y' || c == 'y')
+			return 1;
+		
+		if (c == ' ' || c == '\n' || c == '\t')
+			continue;
+		else
+			printf("PLEASE TRY AGAIN\n");
+		
+		
+	} while(1);
+
 }
