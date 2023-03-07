@@ -13,6 +13,16 @@
 #define TIE 0
 #define NOWINNER -1
 
+/* TODO
+where function take a single char data array, modify to take a struct
+
+allocate a struct game and return a pointer
+struct game* init_game();
+
+...after play 
+free game;
+*/
+
 //Functions
 void print_board(char data[]);
 void usage();
