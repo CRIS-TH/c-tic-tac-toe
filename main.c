@@ -32,11 +32,19 @@ char win_check(char data[]);
 void displayer(int winner);
 int play_again(void);
 
-int main(void) {
-
-//Boards and Player setup
-	char demoboard[BOARD_SIZE] = {'1','2','3','4','5','6','7','8','9'};
+// Struct containing game variables
+struct new_game {
 	char board[BOARD_SIZE];
+	char current_player;
+	char move;
+	char winner;
+	int do_play;
+};
+
+int main(void) {
+//Boards and Player setup
+	char board[BOARD_SIZE];
+	char demoboard[BOARD_SIZE];
 	int do_play = 1;
 
 	while (do_play) {
