@@ -5,6 +5,7 @@
 |*| Release to the Public Domain under CC0-v1.0.
 \*/
 
+#include <stdlib.h>
 #include <stdio.h>
 #define BOARD_SIZE 9
 #define PLAYER1 'X'
@@ -33,12 +34,18 @@ void displayer(int winner);
 int play_again(void);
 
 // Struct containing game variables
-struct new_game {
+struct game {
 	char board[BOARD_SIZE];
 	char current_player;
 	char move;
 	char winner;
 	int do_play;
+};
+
+// Dynamic memory struct
+struct game *new_game(char board[BOARD_SIZE], char current_player, char move, char winner, int do_play) {
+	struct game *pt = malloc(sizeof(struct game));
+	return pt;
 };
 
 int main(void) {
