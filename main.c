@@ -156,10 +156,10 @@ void update_board(struct game *current_game){
 	i = s;
 	// -49 convert the char into int for the array selecter
 	i -= 49;
-	data[i] = player;
+	current_game->board[i] = current_game->current_player;
 }
 
-char win_check(char data[]) {
+char win_check(struct game ) {
 	// Horizontal wins
 	if (data[0] != EMPTY && data[0] == data[1] && data[1] == data[2])
 		return data[0];
