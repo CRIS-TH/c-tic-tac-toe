@@ -5,7 +5,7 @@
 |*| Release to the Public Domain under CC0-v1.0.
 \*/
 
-#include <stdlib.h>
+#include <stdlib.h> // malloc(), free()
 #include <stdio.h>
 #define BOARD_SIZE 9
 #define PLAYER1 'X'
@@ -27,8 +27,8 @@ free game;
 //Functions
 void print_board(char data[]);
 void usage();
-void update_board(char data[], char s, char player);
-char get_move(char player, char data[]);
+void update_board(struct game*);
+char get_move(struct game*);
 char win_check(char data[]);
 void displayer(int winner);
 int play_again(void);
@@ -39,12 +39,15 @@ struct game {
 	char current_player;
 	char move;
 	char winner;
-	int do_play;
 };
 
-// Dynamic memory struct
-struct game *new_game(char board[BOARD_SIZE], char current_player, char move, char winner, int do_play) {
+
+// Create a new game struct and set initial values and return pointer
+struct game *new_game() {
 	struct game *pt = malloc(sizeof(struct game));
+	for(int i = 0; i < BOARD_SIZE; ++i)
+		pt->board[i] = EMPTY;
+	pt->current_player = PLAYER1;
 	return pt;
 };
 
@@ -53,20 +56,18 @@ int main(void) {
 	char board[BOARD_SIZE];
 	char demoboard[BOARD_SIZE];
 	int do_play = 1;
+	struct game *current_game;
 
 	while (do_play) {
-		for(int i = 0; i < BOARD_SIZE; ++i)
-			board[i] = EMPTY;
-		char currentplayer = PLAYER1;
-		char s;
+		current_game = new_game();
 
 	//Show how to play
 		print_board(demoboard);
 		usage();
 
 		do {
-			s = get_move(currentplayer, board);
-			update_board(board, s, currentplayer);
+			current_game->move = get_move(current_game);
+			update_board(current_game);
 			print_board(board);
 			int winner = win_check(board);
 		
@@ -111,9 +112,8 @@ void usage() {
 }
 
 // Get valid char input from current player and return the int value
-char get_move(char player, char data[]) {
-
-	if (player == PLAYER1)
+char get_move(struct game* current_game) {
+	if (current_game->current_player == PLAYER1)
 		printf("Player 1's turn. Input move: ");
 	else
 		printf("Player 2's turn. Input move: ");
@@ -133,7 +133,7 @@ char get_move(char player, char data[]) {
 			case '9':
 				// -49 convert the '1' char to a 0 int for the array
 				i = c;
-				if (data[i-49] == ' ')	
+				if (current_game->board[i-49] == ' ')	
 					return c; // Only valid input
 				else {
 					printf("Space occupied. Try again: ");
@@ -151,7 +151,7 @@ char get_move(char player, char data[]) {
 }
 
 //Store the input data in the board array
-void update_board(char data[], char s, char player){
+void update_board(struct game *current_game){
 	int i;
 	i = s;
 	// -49 convert the char into int for the array selecter
