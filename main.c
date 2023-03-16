@@ -159,37 +159,30 @@ void update_board(struct game *current_game){
 	current_game->board[i] = current_game->current_player;
 }
 
-char win_check(struct game ) {
+char win_check(struct game *current_game) {
 	// Horizontal wins
-	if (data[0] != EMPTY && data[0] == data[1] && data[1] == data[2])
-		return data[0];
+	for (int i = 0; i < BOARD_SIZE; 3+=i){
+		if (current_game->board[i] != EMPTY && current_game->board[i] == current_game->board[1+i] && current_game->board[1+i] == current_game->board[2+i])
+			current_game->winner = current_game->board[i];
+	}
 
-	if (data[3] != EMPTY && data[3] == data[4] && data[4] == data[5])
-		return data[3];
+	// Vertical wins	
+	for (int i = 0; i =< 3; ++i){
+		if (current_game->board[i] != EMPTY && current_game->board[i] == current_game->board[3+i] && current_game->board[3+i] == current_game->board[6+i])
+			current_game->winner = current_game->board[i];
+	}
 
-	if (data[6] != EMPTY && data[6] == data[7] && data[7]== data[8])
-		return data[6];
-
-	// Vertical wins
-	if (data[0] != EMPTY && data[0] == data[3] && data[3] == data[6])
-		return data[0];
-
-	if (data[1] !=EMPTY && data[1] == data[4] && data[4] == data[7])
-		return data[0];
-
-	if (data[2] != EMPTY && data[2] == data[5] && data[5] == data[8])
-		return data[2];
-
-	// Crossed wins
-	if (data[0] != EMPTY && data[0] == data[4] && data[4] == data[8])
+	// Crossed wins	
+	if (current_game->board[0] != EMPTY && current_game->board[0] == current_game->board[4] && current_game->board[4] == current_game->board[8])
 		return data[0];
 	
-	if (data[2] != EMPTY && data[2] == data[4] && data[4] == data[6])
+	if (current_game->board[2] != EMPTY && current_game->board[2] == data[4] && data[4] == data[6])
 		return data[2];
 
 	// Tie
-	if (data[0]!=EMPTY&&data[1]!=EMPTY&&data[2]!=EMPTY&&data[3]!=EMPTY&&data[4]!=EMPTY&&data[5]!=EMPTY&&data[6]!=EMPTY&&data[7]!=EMPTY&&data[8]!=EMPTY)
-		return TIE;
+	for (int i = 0; i < BOARD_SIZE; ++i)
+		if (current_game->board[i]!=EMPTY)
+			return TIE;
 
 	// Game not over yet
 	return NOWINNER;
