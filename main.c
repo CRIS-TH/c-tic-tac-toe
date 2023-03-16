@@ -29,8 +29,8 @@ void print_board(char data[]);
 void usage();
 void update_board(struct game*);
 char get_move(struct game*);
-char win_check(char data[]);
-void displayer(int winner);
+char win_check(struct game*);
+void displayer(struct game*);
 int play_again(void);
 
 // Struct containing game variables
@@ -189,11 +189,11 @@ char win_check(struct game *current_game) {
 
 }
 
-void displayer(int winner){
-	if (winner == 0)
+void displayer(struct game *current_game){
+	if (!current_game->winner)
 		printf("It's a tie\n");
 	else
-		printf("Winner is %c\n", winner);
+		printf("Winner is %c\n", current_game->winner);
 }
 
 int play_again(void){
