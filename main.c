@@ -58,36 +58,35 @@ int main(void) {
 	int do_play = 1;
 	struct game *current_game = NULL;
 
-	while (do_play) {
+
+//Show how to play
+	print_board(demoboard);
+	usage();
+
+	do {
 		if (!current_game)
 			current_game = new_game();
-
-	//Show how to play
-		print_board(demoboard);
-		usage();
-
-		do {
-			current_game->move = get_move(current_game);
-			update_board(current_game);
-			print_board(current_game->board);
-			int winner = win_check(current_game);
-		
-			if (current_game->current_player == PLAYER1)
-				current_game->current_player = PLAYER2;
-			else
-				current_game->current_player = PLAYER1;
 			
-			if (current_game->winner != -1){
-				displayer(current_game);
-				do_play = play_again();
-				free(current_game);
-				current_game = NULL;
-			}
-					
-		}
-		while (do_play);
-	}
+		current_game->move = get_move(current_game);
+		update_board(current_game);
+		print_board(current_game->board);
+		current_game->winner = win_check(current_game);
 	
+		if (current_game->current_player == PLAYER1)
+			current_game->current_player = PLAYER2;
+		else
+			current_game->current_player = PLAYER1;
+		
+		if (current_game->winner != -1){
+			displayer(current_game);
+			do_play = play_again();
+			free(current_game);
+			current_game = NULL;
+		}
+				
+	}
+	while (do_play);
+
 	return 0;
 }
 
