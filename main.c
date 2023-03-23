@@ -24,6 +24,14 @@ struct game* init_game();
 free game;
 */
 
+// Struct containing game variables
+struct game {
+	char board[BOARD_SIZE];
+	char current_player;
+	char move;
+	char winner;
+};
+
 //Functions
 void print_board(char data[]);
 void usage();
@@ -32,14 +40,6 @@ char get_move(struct game*);
 char win_check(struct game*);
 void displayer(struct game*);
 int play_again(void);
-
-// Struct containing game variables
-struct game {
-	char board[BOARD_SIZE];
-	char current_player;
-	char move;
-	char winner;
-};
 
 
 // Create a new game struct and set initial values and return pointer
@@ -54,12 +54,13 @@ struct game *new_game() {
 int main(void) {
 //Boards and Player setup
 	char board[BOARD_SIZE];
-	char demoboard[BOARD_SIZE];
+	char demoboard[BOARD_SIZE] = {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
 	int do_play = 1;
-	struct game *current_game;
+	struct game *current_game = NULL;
 
 	while (do_play) {
-		current_game = new_game();
+		if (!current_game)
+			current_game = new_game();
 
 	//Show how to play
 		print_board(demoboard);
@@ -68,26 +69,25 @@ int main(void) {
 		do {
 			current_game->move = get_move(current_game);
 			update_board(current_game);
-			print_board(board);
-			int winner = win_check(board);
+			print_board(current_game->board);
+			int winner = win_check(current_game);
 		
-			if (currentplayer == PLAYER1)
-				currentplayer = PLAYER2;
+			if (current_game->current_player == PLAYER1)
+				current_game->current_player = PLAYER2;
 			else
-				currentplayer = PLAYER1;
+				current_game->current_player = PLAYER1;
 			
-			if (winner != -1){
-				
-				displayer(winner);
+			if (current_game->winner != -1){
+				displayer(current_game);
 				do_play = play_again();
-				break;
-				//Break inner loop
+				free(current_game);
+				current_game = NULL;
 			}
 					
 		}
-		while (1);
+		while (do_play);
 	}
-
+	
 	return 0;
 }
 
@@ -112,7 +112,7 @@ void usage() {
 }
 
 // Get valid char input from current player and return the int value
-char get_move(struct game* current_game) {
+char get_move(struct game *current_game) {
 	if (current_game->current_player == PLAYER1)
 		printf("Player 1's turn. Input move: ");
 	else
@@ -152,38 +152,38 @@ char get_move(struct game* current_game) {
 
 //Store the input data in the board array
 void update_board(struct game *current_game){
-	int i;
-	i = s;
+	int i = current_game->move;
 	// -49 convert the char into int for the array selecter
 	i -= 49;
 	current_game->board[i] = current_game->current_player;
 }
 
 char win_check(struct game *current_game) {
+	char *data = current_game->board;
+
 	// Horizontal wins
-	for (int i = 0; i < BOARD_SIZE; 3+=i){
-		if (current_game->board[i] != EMPTY && current_game->board[i] == current_game->board[1+i] && current_game->board[1+i] == current_game->board[2+i])
-			current_game->winner = current_game->board[i];
+	for (int i = 0; i < BOARD_SIZE; i+=3){
+		if (data[i] != EMPTY && data[i] == data[1+i] && data[1+i] == data[2+i])
+			current_game->winner = data[i];
 	}
 
 	// Vertical wins	
-	for (int i = 0; i =< 3; ++i){
-		if (current_game->board[i] != EMPTY && current_game->board[i] == current_game->board[3+i] && current_game->board[3+i] == current_game->board[6+i])
-			current_game->winner = current_game->board[i];
+	for (int i = 0; i <= 3; ++i){
+		if (data[i] != EMPTY && data[i] == data[3+i] && data[3+i] == data[6+i])
+			current_game->winner = data[i];
 	}
 
 	// Crossed wins	
-	if (current_game->board[0] != EMPTY && current_game->board[0] == current_game->board[4] && current_game->board[4] == current_game->board[8])
+	if (data[0] != EMPTY && data[0] == data[4] && data[4] == data[8])
 		return data[0];
 	
-	if (current_game->board[2] != EMPTY && current_game->board[2] == data[4] && data[4] == data[6])
+	if (data[2] != EMPTY && data[2] == data[4] && data[4] == data[6])
 		return data[2];
 
 	// Tie
-	for (int i = 0; i < BOARD_SIZE; ++i)
-		if (current_game->board[i]!=EMPTY)
-			return TIE;
-
+	if (data[0]!=EMPTY&&data[1]!=EMPTY&&data[2]!=EMPTY&&data[3]!=EMPTY&&data[4]!=EMPTY&&data[5]!=EMPTY&&data[6]!=EMPTY&&data[7]!=EMPTY&&data[8]!=EMPTY)
+		return TIE;
+	
 	// Game not over yet
 	return NOWINNER;
 
